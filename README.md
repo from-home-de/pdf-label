@@ -1,3 +1,5 @@
-# template-repo
+# PDF label
 
-Description
+This is a Label wrapper for TCPDF.
+
+Inspired by: https://github.com/Uskur/PdfLabel
