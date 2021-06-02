@@ -1,6 +1,6 @@
 /.idea/
 /vendor
-/.tools
+/.tools/*
 !.gitkeep
 /tests/.phpunit.result.cache
 /tests/clover.xml
