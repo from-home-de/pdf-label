@@ -540,4 +540,32 @@ class Label extends TCPDF
 			$this->Line( 0, $y, $this->getPageWidth(), $y, self::CUT_LINE_STYLE );
 		}
 	}
+
+	public function getLabelsCount() : int
+	{
+		return $this->horizontalLabelCount * $this->verticalLabelCount;
+	}
+
+	public function save( string $filePath ) : void
+	{
+		/** @noinspection UnusedFunctionResultInspection */
+		$this->Output( $filePath, 'F' );
+	}
+
+	public function serveInline( string $fileName ) : void
+	{
+		/** @noinspection UnusedFunctionResultInspection */
+		$this->Output( $fileName, 'I' );
+	}
+
+	public function serveAsDownload( string $fileName ) : void
+	{
+		/** @noinspection UnusedFunctionResultInspection */
+		$this->Output( $fileName, 'D' );
+	}
+
+	public function getContent() : string
+	{
+		return $this->Output( '', 'S' );
+	}
 }
