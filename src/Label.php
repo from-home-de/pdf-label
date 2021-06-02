@@ -306,6 +306,7 @@ class Label extends TCPDF
 		$this->verticalPosition   = 0;
 
 		$this->setUpDocument();
+		$this->AddPage();
 	}
 
 	/**
