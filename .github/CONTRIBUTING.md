@@ -2,11 +2,11 @@
 
 Contributions are **welcome** and will be fully **credited**.
 
-We accept contributions via pull requests on [GitHub](http://github.com/from-home-de/template-repo).
+We accept contributions via pull requests on [GitHub](http://github.com/from-home-de/pdf-label).
 
 ## Issues
 
-- Please report issues here on [GitHub](http://github.com/from-home-de/template-repo/issues)
+- Please report issues here on [GitHub](http://github.com/from-home-de/pdf-label/issues)
 
 ## Pull Requests
 
