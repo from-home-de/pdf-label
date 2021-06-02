@@ -1,18 +1,46 @@
-name: template-repo
+name: pdf-label
 
 on:
   push:
     branches:
       - master
       - development
-
+      - "feature/*"
+      - "issue/*"
     tags:
       - 'v*.*.*'
-
-  # Run tests for any PRs.
   pull_request:
 
 jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install tools via PHIVE
+        run: make install-tools
+
+      - name: Check for PHP parse errors
+        run: make phplint
+
+      - name: Composer install
+        run: make composer-install-dev
+
+      - name: Run PHPStan
+        run: make phpstan
+
+      - name: Configure matchers
+        uses: mheap/phpunit-matcher-action@v1
+
+      - name: Run PHPUnit
+        run: make -e PHPUNIT_CLI_OPTIONS="--teamcity" phpunit
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: clover-report
+          path: tests/clover.xml
+
   release:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
