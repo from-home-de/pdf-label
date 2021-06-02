@@ -10,56 +10,68 @@ final class LabelTest extends TestCase
 {
 	/**
 	 * @param string $labelType
+	 * @param int    $expectedLabelCount
 	 *
 	 * @dataProvider labelTypesProvider
 	 */
-	public function testNewFromLabelType( string $labelType ) : void
+	public function testNewFromLabelType( string $labelType, int $expectedLabelCount ) : void
 	{
-		/** @noinspection UnnecessaryAssertionInspection */
-		self::assertInstanceOf( Label::class, Label::newFromLabelType( $labelType ) );
+		self::assertSame( $expectedLabelCount, Label::newFromLabelType( $labelType )->getLabelsCount() );
 	}
 
 	/**
-	 * @return array<array<string, string>>
+	 * @return array<array<string, mixed>>
 	 */
 	public function labelTypesProvider() : array
 	{
 		return [
 			[
-				'labelType' => Label::TYPE_5160,
+				'labelType'          => Label::TYPE_5160,
+				'expectedLabelCount' => 30,
 			],
 			[
-				'labelType' => Label::TYPE_5161,
+				'labelType'          => Label::TYPE_5161,
+				'expectedLabelCount' => 20,
 			],
 			[
-				'labelType' => Label::TYPE_5162,
+				'labelType'          => Label::TYPE_5162,
+				'expectedLabelCount' => 14,
 			],
 			[
-				'labelType' => Label::TYPE_5163,
+				'labelType'          => Label::TYPE_5163,
+				'expectedLabelCount' => 10,
 			],
 			[
-				'labelType' => Label::TYPE_5164,
+				'labelType'          => Label::TYPE_5164,
+				'expectedLabelCount' => 6,
 			],
 			[
-				'labelType' => Label::TYPE_8600,
+				'labelType'          => Label::TYPE_8600,
+				'expectedLabelCount' => 30,
 			],
 			[
-				'labelType' => Label::TYPE_L7161,
+				'labelType'          => Label::TYPE_L7161,
+				'expectedLabelCount' => 18,
 			],
 			[
-				'labelType' => Label::TYPE_L7163,
+				'labelType'          => Label::TYPE_L7163,
+				'expectedLabelCount' => 14,
 			],
 			[
-				'labelType' => Label::TYPE_3422,
+				'labelType'          => Label::TYPE_3422,
+				'expectedLabelCount' => 24,
 			],
 			[
-				'labelType' => Label::TYPE_NEW_PRINT_4005,
+				'labelType'          => Label::TYPE_NEW_PRINT_4005,
+				'expectedLabelCount' => 8,
 			],
 			[
-				'labelType' => Label::TYPE_90x54,
+				'labelType'          => Label::TYPE_90x54,
+				'expectedLabelCount' => 10,
 			],
 			[
-				'labelType' => Label::TYPE_138x98,
+				'labelType'          => Label::TYPE_138x98,
+				'expectedLabelCount' => 4,
 			],
 		];
 	}
