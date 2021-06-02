@@ -250,10 +250,6 @@ class Label extends TCPDF
 		'cutLines'   => 'bool',
 	];
 
-	public function Header() : void { }
-
-	public function Footer() : void { }
-
 	public static function newFromLabelType( string $labelType ) : static
 	{
 		$formatDefinition = self::LABELS[ $labelType ]
@@ -308,6 +304,8 @@ class Label extends TCPDF
 		$this->SetAutoPageBreak( false );
 		$this->horizontalPosition = -1;
 		$this->verticalPosition   = 0;
+
+		$this->setUpDocument();
 	}
 
 	/**
@@ -325,6 +323,12 @@ class Label extends TCPDF
 			}
 		}
 	}
+
+	public function setUpDocument() : void { }
+
+	public function Header() : void { }
+
+	public function Footer() : void { }
 
 	/**
 	 * @param array<string, mixed> $format
