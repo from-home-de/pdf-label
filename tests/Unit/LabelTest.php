@@ -5,6 +5,10 @@ namespace FromHome\Pdf\Tests\Unit;
 use FromHome\Pdf\Label;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use function filesize;
+use function sys_get_temp_dir;
+use function tempnam;
+use function unlink;
 
 final class LabelTest extends TestCase
 {
@@ -103,5 +107,24 @@ final class LabelTest extends TestCase
 				'cutLines'   => true,
 			]
 		);
+	}
+
+	public function testSave() : void
+	{
+		$tempFile = (string)tempnam( sys_get_temp_dir(), 'PdfLabel_' );
+
+		$pdf = Label::newFromLabelType( Label::TYPE_L7161 );
+
+		for ( $i = 0; $i < $pdf->getLabelsCount(); $i++ )
+		{
+			$pdf->addLabel( 'Label text ' . $i );
+		}
+
+		$pdf->save( $tempFile );
+
+		self::assertFileExists( $tempFile );
+		self::assertGreaterThan( 0, filesize( $tempFile ) );
+
+		@unlink( $tempFile );
 	}
 }
