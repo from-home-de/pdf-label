@@ -1,0 +1,34 @@
+{
+    "name": "from-home-de/pdf-label",
+    "description": "PDF label wrapper for TCPDF",
+    "minimum-stability": "stable",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Holger Woltersdorf",
+            "email": "freelance@hollo.me"
+        },
+        {
+            "name": "Burak USGURLU",
+            "email": "burak@uskur.com.tr"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "tecnickcom/tcpdf": "^6.4"
+    },
+    "require-dev": {
+        "ext-xdebug": "*",
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "FromHome\\Pdf\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FromHome\\Pdf\\Tests\\": "tests/"
+        }
+    }
+}
