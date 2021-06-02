@@ -16,7 +16,7 @@ help:
 	} \
 	{ lastLine = $$0 }' $(MAKEFILE_LIST)
 
-PROJECT = cdn
+PROJECT = pdf-label
 STAGE = development
 DOCKER_COMPOSE_OPTIONS = -p $(PROJECT) -f docker-compose.$(STAGE).yml
 DOCKER_COMPOSE_UP_SCALE_OPTIONS = --scale nginx=1
@@ -68,3 +68,66 @@ dcps:
 dcimages:
 	$(DOCKER_COMPOSE_BASE_COMMAND) images
 .PHONY: dcimages
+
+phpUnitKey 		= 4AA394086372C20A
+phpStanKey 		= CF1A108D0E7AE720
+composerKey 	= CBB3D576F2A0946F
+trustedKeys 	= "$(phpUnitKey),$(phpStanKey),$(composerKey)"
+
+## Run install & update of tools via Phive
+update-tools:
+	$(DOCKER_COMPOSE_ISOLATED_RUN_COMMAND) phive \
+	sh -c "php -dmemory_limit=-1 /usr/local/bin/phive --no-progress install --trust-gpg-keys \"$(trustedKeys)\" && php -dmemory_limit=-1 /usr/local/bin/phive --no-progress update"
+	curl -L -o "./.tools/phplint.sh" "https://gist.githubusercontent.com/hollodotme/9c1b805e9a2f946433512563edc4b702/raw/60532cb51f1b7a1550216088943bacbd3d4c9351/phplint.sh"
+	chmod +x "./.tools/phplint.sh"
+.PHONY: update-tools
+
+## Run install of tools via Phive
+install-tools:
+	$(DOCKER_COMPOSE_ISOLATED_RUN_COMMAND) phive \
+	sh -c "php -dmemory_limit=-1 /usr/local/bin/phive --no-progress install --trust-gpg-keys \"$(trustedKeys)\""
+	curl -L -o "./.tools/phplint.sh" "https://gist.githubusercontent.com/hollodotme/9c1b805e9a2f946433512563edc4b702/raw/60532cb51f1b7a1550216088943bacbd3d4c9351/phplint.sh"
+	chmod +x "./.tools/phplint.sh"
+.PHONY: install-tools
+
+composer-install-dev:
+	$(DOCKER_COMPOSE_ISOLATED_RUN_COMMAND) php \
+	php /repo/.tools/composer.phar install --no-progress -o -v
+.PHONY: composer-install-dev
+
+composer-update:
+	$(DOCKER_COMPOSE_ISOLATED_RUN_COMMAND) php \
+	php /repo/.tools/composer.phar update --no-progress -o -v
+.PHONY: composer-update
+
+## Run all static code analysers and tests
+tests: dcvalidate phplint phpstan phpunit
+.PHONY: tests
+
+## Run PHP linting
+phplint:
+	$(DOCKER_COMPOSE_ISOLATED_RUN_COMMAND) php \
+	sh -c "sh /repo/.tools/phplint.sh -p8 -f'*.php' /repo/src /repo/tests"
+.PHONY: phplint
+
+## Run PHPStan
+phpstan:
+	$(DOCKER_COMPOSE_ISOLATED_RUN_COMMAND) php \
+	php /repo/.tools/phpstan.phar analyze --memory-limit=-1
+.PHONY: phpstan
+
+PHPUNIT_CLI_OPTIONS =
+
+## Run PHPUnit
+phpunit:
+	$(DOCKER_COMPOSE_ISOLATED_RUN_COMMAND) php \
+	php \
+	-derror_reporting=-1 \
+	-dmemory_limit=-1 \
+    -dauto_prepend_file=/repo/tests/xdebug-filter.php \
+	/repo/.tools/phpunit.phar \
+	-c /repo/tests/phpunit.xml \
+	$(PHPUNIT_CLI_OPTIONS)
+.PHONY: phpunit
+
+
