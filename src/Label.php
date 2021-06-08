@@ -73,6 +73,8 @@ class Label extends TCPDF
 
 	public const  TYPE_NEW_PRINT_4005     = 'NewPrint4005';
 
+	public const  TYPE_64x34_R            = '64x34-R';
+
 	public const  TYPE_90x54              = '90x54';
 
 	public const  TYPE_138x98             = '138x98';
@@ -206,6 +208,19 @@ class Label extends TCPDF
 			'SpaceY'     => 0,
 			'width'      => 63.5,
 			'height'     => 46.6,
+			'cutLines'   => false,
+		],
+		self::TYPE_64x34_R        => [
+			'paper-size' => 'A4',
+			'unit'       => self::UNIT_MILLIMETER,
+			'marginLeft' => 9.4,
+			'marginTop'  => 13.1,
+			'NX'         => 3,
+			'NY'         => 8,
+			'SpaceX'     => 2.5,
+			'SpaceY'     => 0,
+			'width'      => 63.5,
+			'height'     => 33.9,
 			'cutLines'   => false,
 		],
 		self::TYPE_90x54          => [

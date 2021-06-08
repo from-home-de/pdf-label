@@ -70,6 +70,10 @@ final class LabelTest extends TestCase
 				'expectedLabelCount' => 8,
 			],
 			[
+				'labelType'          => Label::TYPE_64x34_R,
+				'expectedLabelCount' => 24,
+			],
+			[
 				'labelType'          => Label::TYPE_90x54,
 				'expectedLabelCount' => 10,
 			],
