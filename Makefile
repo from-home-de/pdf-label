@@ -25,11 +25,11 @@ DOCKER_COMPOSE_RUN_COMMAND = $(DOCKER_COMPOSE_BASE_COMMAND) run --rm
 DOCKER_COMPOSE_ISOLATED_RUN_COMMAND = $(DOCKER_COMPOSE_BASE_COMMAND) run --rm --no-deps
 
 ## Install setup
-install: dcvalidate dcbuild dcpull dcup
+install: dcvalidate dcbuild dcpull install-tools composer-install-dev
 .PHONY: install
 
 ## Update setup
-update: dcvalidate dcbuild dcpull dcup
+update: dcvalidate dcbuild dcpull install-tools update-tools composer-update
 .PHONY: update
 
 ## Build all containers
@@ -48,16 +48,6 @@ dcpull:
 dcvalidate:
 	$(DOCKER_COMPOSE_BASE_COMMAND) config -q
 .PHONY: dcvalidate
-
-## Bring up docker-compose setup
-dcup:
-	$(DOCKER_COMPOSE_BASE_COMMAND) up $(DOCKER_COMPOSE_UP_SCALE_OPTIONS) -d --force-recreate
-.PHONY: dcup
-
-## Bring up docker-compose down
-dcdown:
-	$(DOCKER_COMPOSE_BASE_COMMAND) down --remove-orphans
-.PHONY: dcdown
 
 ## Show docker compose setup status
 dcps:
