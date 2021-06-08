@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phive xmlns="https://phar.io/phive">
-  <phar name="phpunit" version="^9.5.4" installed="9.5.4" location="./.tools/phpunit.phar" copy="true"/>
+  <phar name="phpunit" version="^9.5.4" installed="9.5.5" location="./.tools/phpunit.phar" copy="true"/>
   <phar name="phpstan" version="^0.12.87" installed="0.12.88" location="./.tools/phpstan.phar" copy="true"/>
-  <phar name="composer" version="^2.0.14" installed="2.0.14" location="./.tools/composer.phar" copy="true"/>
+  <phar name="composer" version="^2.0.14" installed="2.1.2" location="./.tools/composer.phar" copy="true"/>
 </phive>
